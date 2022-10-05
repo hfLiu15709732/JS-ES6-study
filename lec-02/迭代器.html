@@ -9,11 +9,11 @@
 <body>
     
     <script>
-        let xiyou=["孙悟空","唐三藏","沙僧","猪八戒"]
+        // let xiyou=["孙悟空","唐三藏","沙僧","猪八戒"]
 
-        for(let i of xiyou){
-            console.log(i);
-        }
+        // for(let i of xiyou){
+        //     console.log(i);
+        // }
 
         let banji={
             name:"终极二班",
@@ -21,20 +21,44 @@
             ren:["abc","ccd","eef"],
             Staci:"ccrt",
             dajia:["cce","xxx","kkk"],
-            pep:"strp"
-            // [symbol.iterator]()
-            // {
-            //     return {
-            //         next:function()
-            //         {
-            //             return{value:,done:true};
-            //         }
-            //     };
-            // }
-        }
+            pep:"strp",
+            [Symbol.iterator]()
+            {
+                let index=0;
+                let that=this;
+                //返回一个对象
+                return {
+                    //对象具有next链式属性（函数）
+                    next:function(){
+                        if(index<that.dajia.length){
+                            let result={value:that.dajia[index],done:false};
+                            index++;
+                            //为了实现链式属性 需要将其返回
+                            return result;
+                        }
+                        else
+                        {
+                            let result={value:undefined,done:true}
+                            return result
+                        }
+                    }
+                };
+            }
+         }
 
-        for(var j in banji){
-            console.log(banji[j]);
+        // for(var j in banji){
+        //     console.log(j+":    "+banji[j]);
+        // }
+        for(var i of banji)
+        {
+            console.log(i);
+            console.log(i.next);
+        }
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        let it=banji.dajia[Symbol.iterator]();
+        for(let i=0;i<banji.dajia.length;i++)
+        {
+            console.log(it.next());
         }
     </script>
 </body>
